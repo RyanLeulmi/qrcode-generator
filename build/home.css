@@ -1,0 +1,187 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* my stuff */
+*{
+    box-sizing: border-box;
+}
+
+body,html {
+    width:100%;
+    height:100%;
+}
+@font-face {
+    font-family: 'Eczar';
+    src: url("eczar.ttf")
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url("roboto.ttf")
+}
+
+.blue{
+    color:#5BB9E4;
+}
+
+.home-container{
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color:papayawhip;
+}
+#logo{
+    position:absolute;
+    left:0;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    width:150px;
+}
+#logo-img{
+    /* background-image: url("logo.png"); */
+    /* background-size: cover; */
+    width:100px;
+    height:100px;
+}
+#home-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items:center;
+    width:100%;
+    height:80px;
+    border-bottom:1px solid #bfc0c0;
+}
+
+#bar-btn {
+    width:60px;
+    height:60px;
+    border-radius:60px;
+    background-color :#5BB9E4;
+
+    border:2px solid white;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    margin:5px;
+    cursor: pointer;
+}
+#bar-btn-img {
+    width:35px;
+    height:35px;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+#product-img{
+    height:185px;
+    width:200px;
+    margin:15px;
+}
+
+#upload-btn{
+    font-family:Eczar;
+    text-transform: uppercase;
+    border-radius:5px;
+    padding:5px;
+    margin:3px;
+    width:250px;
+    height:50px;
+    font-size:16px;
+    cursor: pointer;
+    background: #5BB9E4;
+    border:1px solid #5BB9E4;
+    color:papayawhip;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+
+#upload-btn::-moz-focus-inner {
+    border: 0;
+  }
+  
+  
+
+.home-header {
+    color:#7c6c77;
+    font-family: Eczar;
+    font-size: 18;
+}
+
+
+.white{
+    color:#7c6c77;
+    font-weight: 400;
+    font-family: Eczar;
+    font-size: 20px;
+    animation: typing 4s steps(29) ;
+    overflow: hidden;
+    white-space: nowrap;
+    width:29ch;
+    margin:15px;
+    text-align: center;
+}
+
+@keyframes typing {
+    0% {
+        width:0ch;
+        border-right: 1px solid #7c6c77;
+    }
+
+    99% {
+        width:29ch;
+        border-right: 1px solid #7c6c77;
+    }
+    100%{
+       border-right:0px;
+    }
+}
