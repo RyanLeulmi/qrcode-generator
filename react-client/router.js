@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import React, { Fragment, Component } from "react";
-import Home from "./routes/home";
+import Form from "./routes/form.js";
 import Inventory from "./routes/inventory";
 import Bar from "./routes/components/bar";
 
@@ -11,12 +11,13 @@ class ClientRouter extends Component {
             redirect: { bool: false, }
         }
     }
+
     render() {
         return (
             <BrowserRouter>
                 <div className="home-container">
                     <Bar />
-                    <Route exact path="/" component={Home} />
+                    <Route exact path="/" component={Form} />
                     <Route exact path="/inventory" component={Inventory} />
                 </div>
             </BrowserRouter>
