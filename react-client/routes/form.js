@@ -146,6 +146,14 @@ let MainHeader = styled.h1`
 `;
 
 
+let FormContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+`;
+
 export default class Form extends React.Component {
     constructor(props) {
         super(props);
@@ -175,7 +183,6 @@ export default class Form extends React.Component {
 
     isTextArea(key) {
         let strings = key.split(/(?=[A-Z])/)
-        console.log("checking")
         if (strings[1] === "Description") return true;
         else return false;
     }
@@ -399,16 +406,16 @@ export default class Form extends React.Component {
             )
         }
         return (
-            <React.Fragment>
-                <div id="overlay" />
-                {this.state.formCounter === 1 &&
+            <FormContainer>
+                {
+                    this.state.formCounter === 1 &&
                     <MainHeader>
                         Quick Response Code <i className="blue">Generator</i>
                     </MainHeader>
                 }
                 {form}
                 {btns}
-            </React.Fragment>
+            </FormContainer>
         )
     }
 }

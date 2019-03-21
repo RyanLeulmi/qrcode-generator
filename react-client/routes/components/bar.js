@@ -4,7 +4,7 @@ import { withRouter } from "react-router";
 
 const Logo = () => (
     <div id="logo">
-        <img src="logo.png" id="logo-img" />
+        <img src="/logo.png" id="logo-img" />
         <h1 id="logo-word">
             <span className="blue">VANCOUVER</span>
             <span className="blue">ISLAND</span>
@@ -56,13 +56,13 @@ const Bar = (props) => (
         <Logo onClick={() => console.log("Clicked the logo")} />
         <div id="links-container">
             <BarBtn
-                src="database.svg"
-                url="/inventory"
+                src="/database.svg"
+                url="/products"
                 history={props.history}
                 location={props.location}
             />
             <BarBtn
-                src="qrcode.svg"
+                src="/qrcode.svg"
                 url="/"
                 history={props.history}
                 location={props.location}
@@ -70,8 +70,8 @@ const Bar = (props) => (
             <BarLink
                 pathname={props.location.pathname}
                 history={props.history}
-                url="/inventory"
-                text="INVENTORY"
+                url="/products"
+                text="PRODUCTS"
             />
             <BarLink
                 pathname={props.location.pathname}

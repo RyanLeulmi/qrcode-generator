@@ -44,6 +44,11 @@ table {
 /* my stuff */
 *{
     box-sizing: border-box;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 body,html {
@@ -59,8 +64,8 @@ body,html {
     src: url("raleway.ttf")
 }
 @font-face {
-    font-family: 'Akura';
-    src: url("akura.ttf")
+    font-family: 'Eczar';
+    src: url("eczar.ttf")
 }
 @font-face {
     font-family: 'FontAwesome';
@@ -76,9 +81,8 @@ body,html {
 .home-container{
     min-width:100%;
     min-height:100%;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
+    display:grid;
+    grid-template-rows: 80px 1fr; 
     background-image: url("home.jpg");
     background-size: cover;
     background-position: center;
@@ -428,5 +432,5 @@ body,html {
 }
 
 .home-container > * {
-    z-index:5000;
+    z-index:2000;
 }

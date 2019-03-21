@@ -1,5 +1,5 @@
 import React from "react";
-import { hydrate, render } from "react-dom";
+import { hydrate } from "react-dom";
 import Router from "./router";
 
 console.log("Hydrating");

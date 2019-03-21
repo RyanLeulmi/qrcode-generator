@@ -1,16 +1,17 @@
 import express from 'express';
 import { StaticRouter } from "react-router-dom";
 import { renderToString } from "react-dom/server";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import multer from "multer";
 import BodyParser from "body-parser";
-import React, { Fragment } from "react";
+import React from "react";
 import Form from "../react-client/routes/form";
-import Inventory from "../react-client/routes/inventory";
+import Products from "../react-client/routes/products";
+import Product from "../react-client/routes/product";
 import Bar from "../react-client/routes/components/bar";
 import mysql from "mysql";
-import { renderToNodeStream } from 'react-dom/server'
-import styled, { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import { ServerStyleSheet } from 'styled-components'
+import cors from "cors";
 
 
 
@@ -48,7 +49,7 @@ const upload = multer({
 let db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "dexkerfa1997",
+    password: "Dexkerfa!997",
     database: "qrcode_app"
 });
 
@@ -69,14 +70,17 @@ app.use(express.static("build/"))
 app.use("/uploads", express.static("uploads/"))
 app.use(BodyParser.urlencoded({ extended: false }))
 app.use(BodyParser.json())
+app.use(cors());
 
-let ServerRouter = (url, sheet) => {
-    return sheet.collectStyles(
+let ServerRouter = (url) => {
+    return (
         <StaticRouter location={url}>
             <div className="home-container">
                 <Bar />
                 <Route exact path="/" component={Form} />
-                <Route exact path="/inventory" component={Inventory} />
+                <Route exact path="/products" component={Products} />
+                <Route exact path="/products/:id" component={Product} />
+                <div id="overlay" />
             </div>
         </StaticRouter>
     )
@@ -89,16 +93,16 @@ let renderPage = (html, css) => `
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+        <link rel="stylesheet" type="text/css" href="/home.css">
         ${css}
         <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
         <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.2/mapbox-gl-geocoder.css' type='text/css' />
-        <link rel="stylesheet" type="text/css" href="home.css">
         <title>React-SSR</title>
     </head>
     <body id="app">
         ${html}
     </body>
-    <script defer src="clientBundle.js"></script>
+    <script defer src="/clientBundle.js"></script>
     <script defer src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
     <script defer src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.2/mapbox-gl-geocoder.min.js'></script>
     </html>
@@ -107,14 +111,14 @@ let renderPage = (html, css) => `
 
 // get all the products
 
-app.get("/products", (req, res) => {
+app.get("/prods", (req, res) => {
     // Select + Inner Join query
-    let getProducts = `SELECT products.business AS business_address,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, businesses.image as business_image , businesses.ownersImage as owners_image from products JOIN businesses ON products.business=businesses.address`;
+    let getProducts = `SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description from products JOIN businesses ON products.business=businesses.address`;
 
     // SQL SELECT + TABLE JOIN 4th
     db.query(getProducts, (err, rows, fields) => {
         if (err) {
-            console.log(err);
+            console.log(err)
             return;
         }
         else {
@@ -125,13 +129,29 @@ app.get("/products", (req, res) => {
 
 })
 
+// get a product by id
+app.get("/prods/:id", (req, res) => {
+    let getProduct = `SELECT products.id AS product_id,products.business AS business_address,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, businesses.image as business_image , businesses.ownersImage as owners_image from products JOIN businesses ON products.business=businesses.address WHERE products.id=${req.params.id}`;
+    // SQL SELECT by id + TABLE INNER JOIN 
+    db.query(getProduct, (err, row, fields) => {
+        if (err) {
+            console.log(err)
+            return;
+        }
+        else {
+            console.log(row);
+            res.json(row)
+        }
+    })
+})
+
 // post a new product
 app.post('/product', upload.array("product-input"), (req, res) => {
     // console.log(req.files);
     // console.log(req.body);
     // Destructuring ///
-    let { businessDesc, businessName, businessWeb, address } = req.body;
-    let { productName, productDesc } = req.body;
+    let { businessDescription, businessName, businessWebsite, address } = req.body;
+    let { productName, productDescription } = req.body;
     let { neighborhood, postcode, city, province, longitude, latitude } = req.body;
     // Destructuring ///
 
@@ -140,8 +160,8 @@ app.post('/product', upload.array("product-input"), (req, res) => {
     let businessData = {
         name: businessName,
         address: address,
-        description: businessDesc,
-        website: businessWeb,
+        description: businessDescription,
+        website: businessWebsite,
         image: "/" + req.files[1].path,
         ownersImage: "/" + req.files[2].path
     }
@@ -158,7 +178,7 @@ app.post('/product', upload.array("product-input"), (req, res) => {
     // Data ==> products TABLE
     let productData = {
         name: productName,
-        description: productDesc,
+        description: productDescription,
         image: "/" + req.files[0].path,
         business: address // foreign key
     }
@@ -195,7 +215,7 @@ app.post('/product', upload.array("product-input"), (req, res) => {
 app.get('*', (req, res) => {
     // Interleave the HTML stream with <style> tags
     let sheet = new ServerStyleSheet();
-    let html = renderToString(ServerRouter(req.url, sheet));
+    let html = renderToString(ServerRouter(req.url));
     let css = sheet.getStyleTags();
     let page = renderPage(html, css);
     console.log("Rendering to string");
