@@ -1,0 +1,10 @@
+CREATE TABLE products(
+    name VARCHAR(150) NOT NULL,
+    description VARCHAR(3000) NOT NULL,
+    image VARCHAR(200) NOT NULL,
+    business VARCHAR(150) NOT NULL,
+    id INT PRIMARY KEY AUTO_INCREMENT UNIQUE,
+    FOREIGN KEY(business) REFERENCES businesses(address)
+    ON DELETE CASCADE ON UPDATE CASCADE
+    );
+

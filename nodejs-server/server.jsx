@@ -49,7 +49,7 @@ const upload = multer({
 let db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Dexkerfa!997",
+    password: "dexadmin123",
     database: "qrcode_app"
 });
 
@@ -113,7 +113,7 @@ let renderPage = (html, css) => `
 
 app.get("/prods", (req, res) => {
     // Select + Inner Join query
-    let getProducts = `SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description from products JOIN businesses ON products.business=businesses.address`;
+    let getProducts = `SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, from products JOIN businesses ON products.business=businesses.address`;
 
     // SQL SELECT + TABLE JOIN 4th
     db.query(getProducts, (err, rows, fields) => {
@@ -131,7 +131,7 @@ app.get("/prods", (req, res) => {
 
 // get a product by id
 app.get("/prods/:id", (req, res) => {
-    let getProduct = `SELECT products.id AS product_id,products.business AS business_address,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, businesses.image as business_image , businesses.ownersImage as owners_image from products JOIN businesses ON products.business=businesses.address WHERE products.id=${req.params.id}`;
+    let getProduct = `SELECT products.id AS product_id,products.business AS business_address,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, businesses.image as business_image , businesses.ownersImage as owners_image,businesses.website AS business_website from products JOIN businesses ON products.business=businesses.address WHERE products.id=${req.params.id}`;
     // SQL SELECT by id + TABLE INNER JOIN 
     db.query(getProduct, (err, row, fields) => {
         if (err) {
@@ -150,6 +150,7 @@ app.post('/product', upload.array("product-input"), (req, res) => {
     // console.log(req.files);
     // console.log(req.body);
     // Destructuring ///
+    console.log("Posted a Product");
     let { businessDescription, businessName, businessWebsite, address } = req.body;
     let { productName, productDescription } = req.body;
     let { neighborhood, postcode, city, province, longitude, latitude } = req.body;

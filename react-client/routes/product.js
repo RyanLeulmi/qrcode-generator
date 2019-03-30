@@ -3,6 +3,7 @@ import QRCode from "qrcode.react";
 import styled from "styled-components";
 import { FiMapPin, FiArrowLeft, FiArrowRight, FiLink } from "react-icons/fi";
 import Axios from "axios";
+
 let SliderContainer = styled.div`
     width:100%;
     height:300px;
@@ -102,7 +103,7 @@ let Slider = (props) => {
                 <ArrowLeft onClick={props.prev} />
                 <ArrowRight onClick={props.next} />
                 <Ind imgs={props.imgs} index={props.index} />
-                <Code value="http://facebook.github.io/react/"
+                <Code value={props.url}
                     renderAs="svg" />
                 >
             </div>
@@ -146,6 +147,7 @@ let Data = styled.div`
     display:flex;
     flex-direction:column;
     background:rgba(255,255,255,.65);
+    flex:1;
 `;
 
 
@@ -155,18 +157,20 @@ let Header = styled.h1`
     margin:10px;
     font-family:Raleway;
     font-size:22px;
+    line-height:22px;
     justify-content:space-between;
     padding:5px;
 `;
 
 let Para = styled.p`
-    color:papayawhip;
+    color:black;
     font-size:18px;
     margin:10px;
 `;
 
 let Address = styled.p`
     display:flex;
+    align-items:center;
     justify-content:flex-start;
     font-size:14px;
     color:white;
@@ -212,7 +216,7 @@ class Product extends Component {
     }
     componentDidMount() {
         let { id } = this.props.match.params;
-        Axios.get(`http://192.168.0.168:3000/prods/${id}`)
+        Axios.get(`http://192.168.0.166:3000/prods/${id}`)
             .then(res => this.setState({
                 productName: res.data[0].product_name,
                 productDesc: res.data[0].product_description,
@@ -230,17 +234,13 @@ class Product extends Component {
                     next={this.next.bind(this)}
                     prev={this.prev.bind(this)}
                     index={this.state.imgIndex}
+                    url={"http://192.168.0.166:3000" + this.props.match.url}
                 />
                 <Data>
-                    <Header>Product Name </Header>
-                    <Para>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu
-                </Para>
-                    <Header>Business Name </Header>
-                    <Para style={{ marginBottom: "65px" }}>
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec qu
-                        </Para>
+                    <Header>{this.state.productName}</Header>
+                    <Para>{this.state.productDesc}</Para>
+                    <Header>{this.state.businessName}</Header>
+                    <Para style={{ marginBottom: "65px" }}>{this.state.businessDesc}</Para>
                     <Address> <Pin /> {this.state.address} <Link /></Address>
                 </Data>
             </ProductContainer>

@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Axios from "axios";
 import Map from "./components/map";
 import React from "react";
+import { withRouter } from "react-router";
+
 // props=(w,h,s,bg,c,b)
 let Btn = styled.button`
     font-family:Raleway;
@@ -67,6 +69,9 @@ let ReturnBtn = (props) => (
                     img.style.border = "2px solid red";
                 } else {
                     props.submitForm();
+                    setTimeout(() => {
+                        props.history.push("/products")
+                    }, 500);
                 }
             }
         }}
@@ -74,7 +79,7 @@ let ReturnBtn = (props) => (
             w="250px" h="50px" s="14px"
             bg="#51BAD9" b="#51BAD9" c="white" style={{ margin: 0, borderTopRightRadius: 0, borderBottomRightRadius: 0 }}
         >
-            NEXT
+            {props.counter === 5 ? "CONFIRM" : "NEXT"}
         </Btn>
         <Return src="return.svg" onClick={() => {
             props.move(props.counter - 1)
@@ -150,11 +155,12 @@ let FormContainer = styled.div`
     display:flex;
     flex-direction:column;
     align-items:center;
-    justify-content:center;
+    justify-content:flex-start;
+    padding-top:10px;
     position:relative;
 `;
 
-export default class Form extends React.Component {
+class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -307,10 +313,9 @@ export default class Form extends React.Component {
         formData.append("longitude", this.state.markerPosition[0]);
         formData.append("latitude", this.state.markerPosition[1]);
         formData.append("address", this.state.address);
-        Axios.post('/product', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+        fetch('/product', {
+            method: "POST",
+            body: formData
         })
     }
 
@@ -401,6 +406,7 @@ export default class Form extends React.Component {
                         farmImg={this.state.farmImg}
                         ownerImg={this.state.ownerImg}
                         submitForm={this.submitForm.bind(this)}
+                        history={this.props.history}
                     />
                 </React.Fragment>
             )
@@ -419,3 +425,6 @@ export default class Form extends React.Component {
         )
     }
 }
+
+
+export default withRouter(Form);

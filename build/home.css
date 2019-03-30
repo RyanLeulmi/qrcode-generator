@@ -166,17 +166,21 @@ body,html {
 }
 .bar-link::after {
     content:"";
-    background: #7c6c77;
+    background:#6ECA8F;
     position: relative;
     left:50%;
     transform: translateX(-50%);
     margin-top:3px;
+    cursor: pointer;
 }
 
 .bar-link:hover::after{
     animation: hoverLink 850ms linear forwards;
 }
 
+#link-text{
+    cursor: pointer;
+}
 
 @media (min-width:850px){
     #bar-btn{
@@ -434,3 +438,17 @@ body,html {
 .home-container > * {
     z-index:2000;
 }
+
+.desc::after{
+    content:"...";
+    position: absolute;
+    display:block;
+    font-size:30px;
+    padding:3px;
+    bottom:2.5px;
+    right:2.5px;
+    color:black;
+    display:grid;
+    justify-content:center;
+}
+

@@ -64,13 +64,17 @@ let ImgGradient = styled.div`
     opacity:0.5;
 `;
 
+
 let ProductDesc = styled.p`
-    padding:10px;
+    overflow:hidden;
+    position:relative;
+    text-overflow:ellipsis;
     font-weight:500;
+    padding:3px;
     font-size:16px;
     width:100%;
     height:40%;
-    line-height:15px;
+    line-height:18px;
     font-family:Roboto;
 `;
 
@@ -85,22 +89,28 @@ let ProductName = styled.h1`
     margin:15px;
 `;
 
-let Product = (props) => (
-    <ProductContainer onClick={() => {
+
+let Product = (props) => {
+    return (<ProductContainer onClick={() => {
         props.history.push(`/products/${props.id}`);
-    }}>
+    }} >
         <ImgContainer img={props.img}>
             <ImgGradient />
             <ProductName>
                 {props.name}
             </ProductName>
         </ImgContainer>
-        <ProductDesc>
+        <ProductDesc className="product-desc">
             {props.description}
         </ProductDesc>
     </ProductContainer>
-);
+    )
+};
 
+
+function isOverflown(element) {
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+}
 
 class ProductsGrid extends Component {
     constructor(props) {
@@ -111,10 +121,22 @@ class ProductsGrid extends Component {
     }
     componentDidMount() {
         console.log("Mounted Inventory");
-        Axios.get("http://192.168.0.168:3000/prods")
+        Axios.get("http://192.168.0.166:3000/prods")
             .then(res => {
-                this.setState({ products: res.data });
-                console.log(res.data);
+                this.setState({ products: res.data }, () => {
+                    console.log(res.data);
+                    let nodeList = document.querySelectorAll(".product-desc");
+                    let array = Array.from(nodeList);
+                    array.map((p, i) => {
+                        if (isOverflown(p)) {
+                            console.log("Paragraph is overflowing");
+                            p.classList.add("desc");
+                        } else {
+
+                            console.log("Paragraph isn't overflowing");
+                        }
+                    })
+                });
             })
             .catch(err => console.log(err))
     }
