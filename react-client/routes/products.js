@@ -69,13 +69,16 @@ let ProductDesc = styled.p`
     overflow:hidden;
     position:relative;
     text-overflow:ellipsis;
+    font-family:Alegreya;
     font-weight:500;
-    padding:3px;
     font-size:16px;
     width:100%;
     height:40%;
     line-height:18px;
     font-family:Roboto;
+    background:yellow;
+    padding:2px 22px 0px 10px;
+    background:rgba(81, 186, 217,.5);
 `;
 
 let ProductName = styled.h1`
@@ -121,7 +124,7 @@ class ProductsGrid extends Component {
     }
     componentDidMount() {
         console.log("Mounted Inventory");
-        Axios.get("http://192.168.0.166:3000/prods")
+        Axios.get("http://192.168.1.138:3000/prods")
             .then(res => {
                 this.setState({ products: res.data }, () => {
                     console.log(res.data);

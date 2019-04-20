@@ -141,31 +141,31 @@ let Ind = (props) => (
 
 let Data = styled.div`
     position:relative;
-    font-family:Roboto;
+    font-family:Alegreya;
     line-height:18px;
     width:100%;
     display:flex;
     flex-direction:column;
     background:rgba(255,255,255,.65);
     flex:1;
+    padding:10px 10px 10px 10px;
 `;
 
 
 let Header = styled.h1`
     color:white;
     text-transform:uppercase;
-    margin:10px;
-    font-family:Raleway;
     font-size:22px;
     line-height:22px;
     justify-content:space-between;
-    padding:5px;
+    font-family:Eczar;
 `;
 
 let Para = styled.p`
     color:black;
     font-size:18px;
-    margin:10px;
+    margin-top:10px;
+    margin-bottom:10px;
 `;
 
 let Address = styled.p`
@@ -216,7 +216,7 @@ class Product extends Component {
     }
     componentDidMount() {
         let { id } = this.props.match.params;
-        Axios.get(`http://192.168.0.166:3000/prods/${id}`)
+        Axios.get(`http://192.168.1.138:3000/prods/${id}`)
             .then(res => this.setState({
                 productName: res.data[0].product_name,
                 productDesc: res.data[0].product_description,
@@ -234,7 +234,7 @@ class Product extends Component {
                     next={this.next.bind(this)}
                     prev={this.prev.bind(this)}
                     index={this.state.imgIndex}
-                    url={"http://192.168.0.166:3000" + this.props.match.url}
+                    url={"http://192.168.1.138:3000" + this.props.match.url}
                 />
                 <Data>
                     <Header>{this.state.productName}</Header>

@@ -54122,7 +54122,7 @@ var MainHeader = styled_components_esm.h1.withConfig({
 })(["color:white;font-weight:bolder;font-family:Raleway;font-size:20px;width:300px;text-align:center;line-height:25px;letter-spacing:3px;text-transform:uppercase;margin:5px;"]);
 var FormContainer = styled_components_esm.div.withConfig({
   componentId: "c3y559-7"
-})(["display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:10px;position:relative;"]);
+})(["display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;"]);
 
 var form_Form =
 /*#__PURE__*/
@@ -54515,7 +54515,7 @@ var ImgGradient = styled_components_esm.div.withConfig({
 })(["position:absolute;width:100%;height:100%;background-image:linear-gradient(#51BAD9,black);opacity:0.5;"]);
 var ProductDesc = styled_components_esm.p.withConfig({
   componentId: "u6ifgz-4"
-})(["overflow:hidden;position:relative;text-overflow:ellipsis;font-weight:500;padding:3px;font-size:16px;width:100%;height:40%;line-height:18px;font-family:Roboto;"]);
+})(["overflow:hidden;position:relative;text-overflow:ellipsis;font-family:Alegreya;font-weight:500;font-size:16px;width:100%;height:40%;line-height:18px;font-family:Roboto;background:yellow;padding:2px 22px 0px 10px;background:rgba(81,186,217,.5);"]);
 var ProductName = styled_components_esm.h1.withConfig({
   componentId: "u6ifgz-5"
 })(["color:white;position:absolute;font-family:Raleway;font-weight:500;font-size:20px;text-align:center;text-transform:uppercase;margin:15px;"]);
@@ -54559,7 +54559,7 @@ function (_Component) {
       var _this2 = this;
 
       console.log("Mounted Inventory");
-      axios_default.a.get("http://192.168.0.166:3000/prods").then(function (res) {
+      axios_default.a.get("http://192.168.1.138:3000/prods").then(function (res) {
         _this2.setState({
           products: res.data
         }, function () {
@@ -55862,13 +55862,13 @@ var product_Ind = function Ind(props) {
 
 var Data = styled_components_esm.div.withConfig({
   componentId: "pzjeqm-10"
-})(["position:relative;font-family:Roboto;line-height:18px;width:100%;display:flex;flex-direction:column;background:rgba(255,255,255,.65);flex:1;"]);
+})(["position:relative;font-family:Alegreya;line-height:18px;width:100%;display:flex;flex-direction:column;background:rgba(255,255,255,.65);flex:1;padding:10px 10px 10px 10px;"]);
 var Header = styled_components_esm.h1.withConfig({
   componentId: "pzjeqm-11"
-})(["color:white;text-transform:uppercase;margin:10px;font-family:Raleway;font-size:22px;line-height:22px;justify-content:space-between;padding:5px;"]);
+})(["color:white;text-transform:uppercase;font-size:22px;line-height:22px;justify-content:space-between;font-family:Eczar;"]);
 var Para = styled_components_esm.p.withConfig({
   componentId: "pzjeqm-12"
-})(["color:black;font-size:18px;margin:10px;"]);
+})(["color:black;font-size:18px;margin-top:10px;margin-bottom:10px;"]);
 var Address = styled_components_esm.p.withConfig({
   componentId: "pzjeqm-13"
 })(["display:flex;align-items:center;justify-content:flex-start;font-size:14px;color:white;width:100%;position:absolute;bottom:0;padding:10px;"]);
@@ -55934,7 +55934,7 @@ function (_Component) {
       var _this2 = this;
 
       var id = this.props.match.params.id;
-      axios_default.a.get("http://192.168.0.166:3000/prods/".concat(id)).then(function (res) {
+      axios_default.a.get("http://192.168.1.138:3000/prods/".concat(id)).then(function (res) {
         return _this2.setState({
           productName: res.data[0].product_name,
           productDesc: res.data[0].product_description,
@@ -55955,7 +55955,7 @@ function (_Component) {
         next: this.next.bind(this),
         prev: this.prev.bind(this),
         index: this.state.imgIndex,
-        url: "http://192.168.0.166:3000" + this.props.match.url
+        url: "http://192.168.1.138:3000" + this.props.match.url
       }), react_default.a.createElement(Data, null, react_default.a.createElement(Header, null, this.state.productName), react_default.a.createElement(Para, null, this.state.productDesc), react_default.a.createElement(Header, null, this.state.businessName), react_default.a.createElement(Para, {
         style: {
           marginBottom: "65px"
@@ -56117,7 +56117,7 @@ var upload = multer_default()({
 var db = mysql_default.a.createConnection({
   host: "localhost",
   user: "root",
-  password: "dexadmin123",
+  password: "Zugaga!23",
   database: "qrcode_app"
 });
 db.connect(function (err) {
@@ -56166,7 +56166,7 @@ var renderPage = function renderPage(html, css) {
 
 app.get("/prods", function (req, res) {
   // Select + Inner Join query
-  var getProducts = "SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, from products JOIN businesses ON products.business=businesses.address"; // SQL SELECT + TABLE JOIN 4th
+  var getProducts = "SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description from products JOIN businesses ON products.business=businesses.address"; // SQL SELECT + TABLE JOIN 4th
 
   db.query(getProducts, function (err, rows, fields) {
     if (err) {

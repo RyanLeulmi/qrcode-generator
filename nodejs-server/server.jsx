@@ -49,7 +49,7 @@ const upload = multer({
 let db = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "dexadmin123",
+    password: "Zugaga!23",
     database: "qrcode_app"
 });
 
@@ -113,7 +113,7 @@ let renderPage = (html, css) => `
 
 app.get("/prods", (req, res) => {
     // Select + Inner Join query
-    let getProducts = `SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description, from products JOIN businesses ON products.business=businesses.address`;
+    let getProducts = `SELECT products.id AS product_id,products.name AS product_name,products.description AS product_description,products.image AS product_image,businesses.name AS business_name,businesses.description AS business_description from products JOIN businesses ON products.business=businesses.address`;
 
     // SQL SELECT + TABLE JOIN 4th
     db.query(getProducts, (err, rows, fields) => {

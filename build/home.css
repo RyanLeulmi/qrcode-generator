@@ -64,6 +64,10 @@ body,html {
     src: url("raleway.ttf")
 }
 @font-face {
+    font-family: 'Alegreya';
+    src: url("alegreya.otf")
+}
+@font-face {
     font-family: 'Eczar';
     src: url("eczar.ttf")
 }
@@ -445,8 +449,8 @@ body,html {
     display:block;
     font-size:30px;
     padding:3px;
-    bottom:2.5px;
-    right:2.5px;
+    bottom:4px;
+    right:2px;
     color:black;
     display:grid;
     justify-content:center;
